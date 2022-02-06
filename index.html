@@ -78,7 +78,56 @@
                     <td>$ 20</td>
                 </tr>
             </table>
-            
+            <hr>
+            <h2>Data Structures - Sparse Tables </h2>
+            <blockquote cite="https://cp-algorithms.com/data_structures/sparse-table.html">Sparse Table is a data structure, that allows answering range queries. It can answer most range queries in , but its true power is answering range minimum queries (or equivalent range maximum queries). For those queries it can compute the answer in  time.
+
+                The only drawback of this data structure is, that it can only be used on immutable arrays. This means, that the array cannot be changed between two queries. If any element in the array changes, the complete data structure has to be recomputed. </blockquote>
+            <a href="https://cp-algorithms.com/data_structures/sparse-table.html">Code Source and Description</a>
+            <pre>
+                int st[MAXN][K + 1];
+                for (int i = 0; i < N; i++)
+                st[i][0] = f(array[i]);
+
+        for (int j = 1; j <= K; j++)
+             for (int i = 0; i + (1 << j) <= N; i++)
+            st[i][j] = f(st[i][j-1], st[i + (1 << (j - 1))][j - 1]);
+
+        long long st[MAXN][K + 1];
+
+        for (int i = 0; i < N; i++)
+            st[i][0] = array[i];
+        
+        for (int j = 1; j <= K; j++)
+            for (int i = 0; i + (1 << j) <= N; i++)
+                st[i][j] = st[i][j-1] + st[i + (1 << (j - 1))][j - 1];
+                
+                
+                long long sum = 0;
+                for (int j = K; j >= 0; j--) {
+                    if ((1 << j) <= R - L + 1) {
+                        sum += st[L][j];
+                        L += 1 << j;
+                    }
+                }
+
+                int log[MAXN+1];
+                log[1] = 0;
+                for (int i = 2; i <= MAXN; i++)
+                log[i] = log[i/2] + 1;
+
+                int st[MAXN][K + 1];
+
+        for (int i = 0; i < N; i++)
+            st[i][0] = array[i];
+
+        for (int j = 1; j <= K; j++)
+            for (int i = 0; i + (1 << j) <= N; i++)
+             st[i][j] = min(st[i][j-1], st[i + (1 << (j - 1))][j - 1]);
+
+             int j = log[R - L + 1];
+             int minimum = min(st[L][j], st[R - (1 << j) + 1][j]);
+            </pre>
             <a href="file:///C:/Users/s546553/Downloads/NorthWest/WebApps/webapps-repos/webapps-s22-assignment-3-s546553/aboutme.html"><b>About ME - Abhishek</b></a>
     </body>
 </html>
